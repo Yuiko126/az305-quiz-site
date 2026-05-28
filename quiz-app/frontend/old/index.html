@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AZ-305 試験対策クイズ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <aside class="app-sidebar">
+    <header class="sidebar-header">
+        <h1 class="app-title">☁️ AZ-305 クイズ</h1>
+    </header>
+    </aside>
+
+    <main id="app">
+
+        <!-- ① ホーム画面 -->
+        <section id="screen-home" class="screen active">
+            <div class="card home-card">
+                <h2>学習を始めましょう</h2>
+                <div class="form-group">
+                    <label>出題モード</label>
+                    <div class="mode-buttons">
+                        <button id="btn-mode-normal" class="mode-btn active" data-mode="normal">🎲 通常モード</button>
+                        <button id="btn-mode-weak" class="mode-btn" data-mode="weak">🔥 苦手問題モード</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="select-count">出題数</label>
+                    <select id="select-count">
+                        <option value="10">10 問</option>
+                        <option value="20">20 問</option>
+                        <option value="all">全問</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="select-domain">分野（ドメイン）</label>
+                    <select id="select-domain">
+                        <option value="all">すべての分野</option>
+                    </select>
+                </div>
+                <button id="btn-start" class="btn-primary btn-large">スタート 🚀</button>
+            </div>
+        </section>
+
+        <!-- ② クイズ画面 -->
+        <section id="screen-quiz" class="screen">
+            <div class="progress-container">
+                <span id="progress-text">1 / 10</span>
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+            </div>
+            <div class="card quiz-card">
+                <p id="question-domain" class="domain-label"></p>
+                <h2 id="question-text" class="question-text"></h2>
+                <div id="options-container" class="options-container"></div>
+                <!-- 解説エリア（回答後に表示） -->
+                <div id="explanation-area" class="explanation-area" style="display:none;">
+                    <button class="accordion-toggle" id="accordion-toggle">
+                        <span>📖 解説を見る</span>
+                        <span class="accordion-arrow">▼</span>
+                    </button>
+                    <div id="explanation-body" class="explanation-body">
+                        <p id="explanation-text" class="explanation-text"></p>
+                        <a id="explanation-link" class="explanation-link" href="#" target="_blank" rel="noopener"
+                            style="display:none;">
+                            📄 Microsoft Docs で詳細を確認 →
+                        </a>
+                    </div>
+                </div>
+                <button id="btn-next" class="btn-primary" style="display:none;">次の問題 →</button>
+            </div>
+        </section>
+
+        <!-- ③ 結果画面 -->
+        <section id="screen-result" class="screen">
+            <div class="card result-card">
+                <h2>結果</h2>
+                <div class="score-display">
+                    <span id="score-fraction" class="score-fraction"></span>
+                    <span id="score-percent" class="score-percent"></span>
+                </div>
+                <p id="score-message" class="score-message"></p>
+                <div class="result-buttons">
+                    <button id="btn-retry" class="btn-primary">もう一度</button>
+                    <button id="btn-home" class="btn-secondary">ホームへ</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ④ ダッシュボード画面 -->
+        <section id="screen-dashboard" class="screen">
+            <div class="card">
+                <h2>📊 学習ダッシュボード</h2>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <span class="stat-value" id="stat-total-sessions">0</span>
+                        <span class="stat-label">学習回数</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-value" id="stat-avg-rate">--%</span>
+                        <span class="stat-label">平均正答率</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-value" id="stat-weak-count">0</span>
+                        <span class="stat-label">苦手問題数</span>
+                    </div>
+                </div>
+                <h3>学習履歴（直近 30 件）</h3>
+                <div id="history-list" class="history-list"></div>
+                <button id="btn-dashboard-home" class="btn-secondary" style="margin-top:16px;">← ホームへ</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- quiz.js を先に読み込む -->
+    <script src="quiz.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

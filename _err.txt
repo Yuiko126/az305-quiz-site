@@ -1,0 +1,4 @@
+error: pathspec 'chore:' did not match any file(s) known to git
+error: pathspec 'initialize' did not match any file(s) known to git
+error: pathspec 'monorepo' did not match any file(s) known to git
+error: pathspec 'structure\  ;' did not match any file(s) known to git

@@ -1,0 +1,25 @@
+# Workspace-level ignores
+.vs/
+
+# Build outputs
+**/bin/
+**/obj/
+**/dist/
+**/dist-ssr/
+
+# Dependencies
+**/node_modules/
+
+# Local env/settings
+**/.env
+**/*.local
+**/local.settings.json
+**/*.db-wal
+**/*.db-shm
+
+# Editor
+**/.vscode/
+!.vscode/extensions.json
+
+# Temporary backups
+**/.git_backup_migration_20260528/

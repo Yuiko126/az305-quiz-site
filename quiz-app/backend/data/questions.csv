@@ -1,0 +1,42 @@
+id,domain,question,option_a,option_b,option_c,option_d,answer,explanation,reference_url
+
+1,インフラストラクチャ,AzureでIaaS仮想マシンの可用性を高めるために最も推奨される構成はどれか,可用性セットを使用する,1台のVMを高性能SKUにする,ディスクをPremiumにする,VMを手動でバックアップする,A,可用性セットは障害ドメインと更新ドメインを分離し可用性を高める,https://learn.microsoft.com/azure/virtual-machines/availability
+2,インフラストラクチャ,VM Scale Setsを使用する主な利点はどれか,自動スケールと高可用性,バックアップの簡素化,セキュリティの向上,コスト管理のみ,A,VMSSはオートスケールと負荷分散を提供する,https://learn.microsoft.com/azure/virtual-machine-scale-sets/
+3,インフラストラクチャ,Azure Load Balancerが提供する機能はどれか,レイヤー4負荷分散,SSL終端,WAF機能,URLベースルーティング,A,Load BalancerはL4(TCP/UDP)を提供する,https://learn.microsoft.com/azure/load-balancer/load-balancer-overview
+4,インフラストラクチャ,グローバルなHTTPアプリケーションに最適なサービスはどれか,Azure Front Door,Azure Traffic Manager,Azure Load Balancer,Azure App Gateway,A,Front DoorはL7でグローバル分散に対応,https://learn.microsoft.com/azure/frontdoor/front-door-overview
+5,インフラストラクチャ,AKSでノードの更新を安全に行う仕組みはどれか,ノードプール,Pod Security Policy,Azure Policy,NSG,A,ノードプールにより段階的更新が可能,https://learn.microsoft.com/azure/aks/use-multiple-node-pools
+6,インフラストラクチャ,Azure Virtual Networkでアドレス空間を分割する単位はどれか,サブネット,NSG,ルートテーブル,VNet Peering,A,サブネットはIP範囲を分割する単位,https://learn.microsoft.com/azure/virtual-network/virtual-networks-overview
+7,インフラストラクチャ,オンプレミスとAzureをプライベート接続するサービスはどれか,ExpressRoute,VPN Gateway,Azure Bastion,Load Balancer,A,ExpressRouteは専用線接続を提供,https://learn.microsoft.com/azure/expressroute/expressroute-introduction
+8,インフラストラクチャ,Azure Bastionを使用する目的はどれか,VMへの安全なRDP/SSH,VMの自動スケール,ディスク暗号化,ログ分析,A,Bastionはブラウザ経由で安全に接続,https://learn.microsoft.com/azure/bastion/bastion-overview
+9,インフラストラクチャ,可用性ゾーンを利用できるリージョンの特徴はどれか,データセンターが物理的に分離,常に3ゾーン固定,全リージョンで利用可能,バックアップ専用,A,可用性ゾーンは物理的に分離されたDC,https://learn.microsoft.com/azure/reliability/availability-zones
+10,インフラストラクチャ,Azure App Serviceでスケールアウトに使う仕組みはどれか,インスタンス数の増加,CPUクロック上昇,リージョン変更,OSアップグレード,A,スケールアウトはインスタンスを増やす,https://learn.microsoft.com/azure/app-service/overview
+11,ID・ガバナンス・監視,Azure ADでオンプレミスADと同期するツールはどれか,Azure AD Connect,Azure Policy,Azure Monitor,Azure Arc,A,Azure AD ConnectはID同期ツール,https://learn.microsoft.com/azure/active-directory/hybrid/whatis-azure-ad-connect
+12,ID・ガバナンス・監視,条件付きアクセスの主な目的はどれか,アクセス制御,ネットワーク分離,コスト管理,負荷分散,A,条件付きアクセスはサインイン制御,https://learn.microsoft.com/azure/active-directory/conditional-access/overview
+13,ID・ガバナンス・監視,Azure RBACで最小権限を実現する方法はどれか,必要なロールのみ割り当てる,全ユーザーを所有者にする,管理グループを使わない,手動管理,A,最小限の役割付与が原則,https://learn.microsoft.com/azure/role-based-access-control/overview
+14,ID・ガバナンス・監視,Azure Policyの用途はどれか,リソースの構成ルール強制,ユーザー認証,トラフィック制御,データ暗号化,A,Policyはガバナンスルールを定義,https://learn.microsoft.com/azure/governance/policy/overview
+15,ID・ガバナンス・監視,Azure Monitorが収集するものはどれか,メトリックとログ,ユーザーID,バックアップ,VHD,A,監視データを集約,https://learn.microsoft.com/azure/azure-monitor/overview
+16,ID・ガバナンス・監視,Log Analyticsで使うクエリ言語はどれか,KQL,SQL,PowerShell,Python,A,KQLはログ分析専用言語,https://learn.microsoft.com/azure/data-explorer/kusto/query/
+17,ID・ガバナンス・監視,Azure Activity Logで確認できる内容はどれか,サブスクリプション操作履歴,OSイベント,SQLクエリ,アプリログ,A,管理操作の監査ログ,https://learn.microsoft.com/azure/azure-monitor/platform/activity-log
+18,ID・ガバナンス・監視,管理グループの目的はどれか,複数サブスクリプション管理,VM管理,ログ保存,認証強化,A,管理グループは階層管理用,https://learn.microsoft.com/azure/governance/management-groups/overview
+19,ID・ガバナンス・監視,Azure Blueprintsの役割はどれか,環境構成の標準化,ネットワーク暗号化,監視設定,負荷分散,A,Blueprintsで一貫した環境を提供,https://learn.microsoft.com/azure/governance/blueprints/overview
+20,ID・ガバナンス・監視,診断設定で送信できる先はどれか,Log Analytics,Key Vault,Blobのみ,VMのみ,A,ログをWorkspace等へ送信可能,https://learn.microsoft.com/azure/azure-monitor/essentials/diagnostic-settings
+21,ビジネス継続性,Azure Backupの主な用途はどれか,データ保護,ロードバランス,暗号化,認証,A,Backupはバックアップ管理サービス,https://learn.microsoft.com/azure/backup/backup-overview
+22,ビジネス継続性,Azure Site Recoveryの用途はどれか,災害復旧,コスト最適化,ログ監視,セキュリティ分析,A,ASRはDRソリューション,https://learn.microsoft.com/azure/site-recovery/site-recovery-overview
+23,ビジネス継続性,RPOとは何を示す指標か,許容データ損失時間,復旧時間,可用性,遅延,A,RPOはデータ損失許容,https://learn.microsoft.com/azure/well-architected/reliability
+24,ビジネス継続性,RTOとは何か,復旧までの時間,データ損失量,コスト,性能,A,RTOはサービス復旧時間,https://learn.microsoft.com/azure/well-architected/reliability
+25,ビジネス継続性,Geo-redundant Storage(GRS)の特徴はどれか,別リージョンに複製,同一DCのみ,手動同期,暗号化専用,A,GRSはリージョン冗長,https://learn.microsoft.com/azure/storage/common/storage-redundancy
+26,ビジネス継続性,ゾーン冗長サービスの利点はどれか,ゾーン障害耐性,低コスト,高速通信,単一DC,A,AZ障害に耐える,https://learn.microsoft.com/azure/reliability/availability-zones
+27,ビジネス継続性,フェールオーバー計画で重要なのはどれか,定期的なテスト,手動操作,単一手順,監視不要,A,DRは定期テストが必須,https://learn.microsoft.com/azure/site-recovery/site-recovery-test-failover
+28,ビジネス継続性,Azure SQLの自動バックアップ保持期間は通常どれか,7〜35日,1日,90日,無制限,A,SQLは自動バックアップあり,https://learn.microsoft.com/azure/azure-sql/database/automated-backups
+29,ビジネス継続性,ストレージアカウントでDRを強化する設定はどれか,RA-GRS,ローカル冗長,暗号化のみ,HTTPS,A,RA-GRSは読み取り可セカンダリ,https://learn.microsoft.com/azure/storage/common/storage-redundancy
+30,ビジネス継続性,高可用性設計で避けるべき構成はどれか,単一リージョン1台構成,マルチゾーン,冗長化,自動復旧,A,単一障害点はリスクが高い,https://learn.microsoft.com/azure/architecture/resiliency
+31,セキュリティ設計,Azure Key Vaultの用途はどれか,シークレット管理,負荷分散,監視,バックアップ,A,Key Vaultは秘密情報管理,https://learn.microsoft.com/azure/key-vault/general/overview
+32,セキュリティ設計,ネットワークレベルでトラフィック制御するサービスはどれか,NSG,Azure AD,Key Vault,Monitor,A,NSGはL3/L4制御,https://learn.microsoft.com/azure/virtual-network/network-security-groups-overview
+33,セキュリティ設計,Azure Firewallの特徴はどれか,フルマネージドFW,IDSのみ,ロードバランサー,L7非対応,A,Azure FirewallはPaaS FW,https://learn.microsoft.com/azure/firewall/overview
+34,セキュリティ設計,WAFの役割はどれか,Web攻撃防御,VM認証,ディスク暗号化,DDoS検知,A,WAFはOWASP対策,https://learn.microsoft.com/azure/web-application-firewall/ag/ag-overview
+35,セキュリティ設計,DDoS Protection Standardの効果はどれか,大規模攻撃緩和,暗号化,認証,バックアップ,A,DDoS攻撃防御を提供,https://learn.microsoft.com/azure/ddos-protection/ddos-protection-overview
+36,セキュリティ設計,マネージドIDの利点はどれか,資格情報不要,高性能,バックアップ容易,コスト削減,A,パスワード不要で安全,https://learn.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview
+37,セキュリティ設計,Defender for Cloudの目的はどれか,セキュリティ態勢管理,監視ログ,負荷分散,ID管理,A,セキュリティ推奨提供,https://learn.microsoft.com/azure/defender-for-cloud/defender-for-cloud-introduction
+38,セキュリティ設計,ディスク暗号化に使われる技術はどれか,Azure Disk Encryption,NSG,Azure Backup,Traffic Manager,A,BitLocker/DM-Cryptを利用,https://learn.microsoft.com/azure/virtual-machines/disk-encryption-overview
+39,セキュリティ設計,Private Endpointの目的はどれか,サービスをVNet内で公開,高速化,認証強化,冗長化,A,パブリック公開を防ぐ,https://learn.microsoft.com/azure/private-link/private-endpoint-overview
+40,セキュリティ設計,HTTPS通信を強制する設定はどれか,App Service HTTPS Only,NSG,Key Vault ACL,Azure Monitor,A,HTTPS強制で安全通信,https://learn.microsoft.com/azure/app-service/configure-ssl-bindings

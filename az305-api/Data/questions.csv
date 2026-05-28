@@ -1,0 +1,34 @@
+Id,Domain,QuestionText,OptionA,OptionB,OptionC,OptionD,Answer,Explanation,ReferenceUrl
+Q-INF-01,インフラストラクチャ,Azureで複数リージョンにまたがる高可用性設計を行う理由はどれか,パフォーマンス向上のため,コスト削減のため,リージョン障害への対応のため,管理を簡素化するため,C,リージョン障害時でもサービスを継続できるようにするため,https://learn.microsoft.com/azure/architecture/resiliency/
+Q-INF-02,インフラストラクチャ,Azure Load Balancerが主に提供する機能はどれか,アプリケーションレベルのルーティング,OSIレイヤー7での負荷分散,OSIレイヤー4での負荷分散,キャッシュ機能,C,Azure Load BalancerはL4ロードバランサーである,https://learn.microsoft.com/azure/load-balancer/load-balancer-overview
+Q-INF-03,インフラストラクチャ,Azure Application Gatewayが適しているシナリオはどれか,TCPトラフィックの分散,UDP通信の高速化,HTTP/HTTPSのルーティングとWAF,ストレージアクセス制御,C,Application GatewayはL7ロードバランサーでWAFを提供,https://learn.microsoft.com/azure/application-gateway/overview
+Q-INF-04,インフラストラクチャ,Azure VM Scale Setsの利点はどれか,手動スケーリングのみ,自動スケーリングと高可用性,単一VMのみ対応,バックアップ専用,B,負荷に応じてVM数を自動調整できる,https://learn.microsoft.com/azure/virtual-machine-scale-sets/overview
+Q-INF-05,インフラストラクチャ,Azure Virtual Networkでサブネットを分割する主な目的はどれか,コスト削減,IPアドレス制限,セキュリティとトラフィック分離,バックアップ最適化,C,サブネットでトラフィックとセキュリティ境界を分離する,https://learn.microsoft.com/azure/virtual-network/virtual-networks-overview
+Q-INF-06,インフラストラクチャ,Azure Bastionを使用する主な利点はどれか,SSHキー管理不要,公開IPなしでのVM接続,VMコスト削減,高速バックアップ,B,公開IPを使わずに安全に接続できる,https://learn.microsoft.com/azure/bastion/bastion-overview
+Q-INF-07,インフラストラクチャ,Azure Availability Zoneの特徴はどれか,単一データセンター,同一リージョン内の物理的に分離されたゾーン,グローバル負荷分散,バックアップ専用,B,同一リージョン内で冗長性を提供する,https://learn.microsoft.com/azure/reliability/availability-zones-overview
+Q-INF-08,インフラストラクチャ,Azure NAT Gatewayを使用する主な目的はどれか,インバウンド通信制御,アウトバウンド通信の安定したIP提供,VPN接続,負荷分散,B,固定された送信元IPアドレスを提供,https://learn.microsoft.com/azure/virtual-network/nat-gateway/nat-overview
+
+Q-ID-01,ID・ガバナンス・監視,Azure Active Directoryの主な役割はどれか,ネットワーク管理,IDとアクセス管理,データ暗号化,バックアップ管理,B,IDと認証・認可を提供する,https://learn.microsoft.com/azure/active-directory/fundamentals/active-directory-whatis
+Q-ID-02,ID・ガバナンス・監視,Azure RBACを使用する理由はどれか,ネットワーク分割,最小権限アクセスの実現,課金管理のみ,バックアップ制御,B,必要最小限の権限を付与できる,https://learn.microsoft.com/azure/role-based-access-control/overview
+Q-ID-03,ID・ガバナンス・監視,Azure Policyの用途はどれか,リソース作成時のルール強制,監視ログ収集,ID認証,トラフィック制御,A,組織のガバナンスルールを強制できる,https://learn.microsoft.com/azure/governance/policy/overview
+Q-ID-04,ID・ガバナンス・監視,Azure Blueprintsが提供する価値はどれか,単一リソース管理,ガバナンステンプレートの再利用,VMスケーリング,バックアップ,B,ポリシーやRBACを含む設計を再利用可能,https://learn.microsoft.com/azure/governance/blueprints/overview
+Q-ID-05,ID・ガバナンス・監視,Azure Monitorの役割はどれか,ID管理,アプリケーションの監視とログ収集,バックアップ管理,コスト削減,B,メトリックとログを収集・分析する,https://learn.microsoft.com/azure/azure-monitor/overview
+Q-ID-06,ID・ガバナンス・監視,Log Analytics Workspaceは何に使われるか,VM作成,ログの集中管理とクエリ,ネットワーク分割,アクセス制御,B,KQLでログ分析が可能,https://learn.microsoft.com/azure/azure-monitor/logs/log-analytics-overview
+Q-ID-07,ID・ガバナンス・監視,Management Groupを使う主な理由はどれか,VM管理,サブスクリプションの論理的整理,ストレージ最適化,B,複数サブスクリプションにポリシー適用,https://learn.microsoft.com/azure/governance/management-groups/overview
+Q-ID-08,ID・ガバナンス・監視,Azure Advisorが提供する情報はどれか,セキュリティインシデント対応,ベストプラクティスに基づく推奨事項,ログ分析,バックアップ設定,B,コスト・可用性・セキュリティの改善提案,https://learn.microsoft.com/azure/advisor/advisor-overview
+
+Q-BC-01,ビジネス継続性,Azure Backupの主な目的はどれか,アプリケーション監視,データの保護と復元,ID管理,負荷分散,B,Azureリソースのバックアップを提供,https://learn.microsoft.com/azure/backup/backup-overview
+Q-BC-02,ビジネス継続性,Azure Site Recoveryの役割はどれか,バックアップのみ,ディザスタリカバリ,監視ログ収集,課金管理,B,災害時にVMを別リージョンへフェールオーバー,https://learn.microsoft.com/azure/site-recovery/site-recovery-overview
+Q-BC-03,ビジネス継続性,RTOが短い設計が求められる理由はどれか,復旧時間を最小化,コスト削減,性能向上,監視強化,A,停止時間を短くするため,https://learn.microsoft.com/azure/architecture/reliability/disaster-recovery
+Q-BC-04,ビジネス継続性,RPOが示す指標はどれか,復旧時間,許容データ損失量,可用性,SLA,B,RPOはどこまでデータ損失を許容するか,https://learn.microsoft.com/azure/architecture/reliability/disaster-recovery
+Q-BC-05,ビジネス継続性,Active-Active構成の利点はどれか,構成が簡単,片系のみ稼働,高可用性と負荷分散,バックアップ高速化,C,両系が同時に稼働し冗長性を確保,https://learn.microsoft.com/azure/architecture/patterns/active-active
+Q-BC-06,ビジネス継続性,フェールオーバーテストを実施する目的はどれか,コスト算出,実際の災害時の動作確認,性能測定,監査対応,B,DR計画が正しく機能するか検証,https://learn.microsoft.com/azure/site-recovery/site-recovery-testing
+Q-BC-07,ビジネス継続性,Azure Storageの冗長オプションでリージョン冗長を提供するものはどれか,LRS,ZRS,GRS,Premium Storage,C,GRSは別リージョンにデータを複製,https://learn.microsoft.com/azure/storage/common/storage-redundancy
+
+Q-SEC-01,セキュリティ設計,ゼロトラストモデルの考え方として正しいものはどれか,内部は信頼する,常に検証する,IP制限のみで十分,VPNが不要,B,常にユーザーとデバイスを検証する,https://learn.microsoft.com/security/zero-trust/
+Q-SEC-02,セキュリティ設計,Azure Key Vaultを使う目的はどれか,ログ収集,シークレットと証明書の管理,VMスケール,監視,B,機密情報を安全に保管する,https://learn.microsoft.com/azure/key-vault/general/overview
+Q-SEC-03,セキュリティ設計,Managed Identityの利点はどれか,パスワード不要でAzureリソースにアクセス,手動キー管理,外部IdP必須,ネットワーク制御,A,資格情報をコードに含めずに済む,https://learn.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview
+Q-SEC-04,セキュリティ設計,Azure Defender（Microsoft Defender for Cloud）の主な役割はどれか,課金最適化,セキュリティ脅威の検出と推奨,負荷分散,バックアップ管理,B,セキュリティ体制を可視化し改善,https://learn.microsoft.com/azure/defender-for-cloud/defender-for-cloud-introduction
+Q-SEC-05,セキュリティ設計,NSGで制御できるものはどれか,アプリケーションコード,ネットワークトラフィック,ID認証,コスト,B,インバウンド/アウトバウンド通信制御,https://learn.microsoft.com/azure/virtual-network/network-security-groups-overview
+Q-SEC-06,セキュリティ設計,WAFが防御する主な脅威はどれか,物理攻撃,SQLインジェクション,XSS,マルウェア,B,Webアプリケーション攻撃を防御,https://learn.microsoft.com/azure/web-application-firewall/overview
+Q-SEC-07,セキュリティ設計,暗号化の設計で重要な観点はどれか,キー管理,VMサイズ,リージョン選択,バックアップ速度,A,キーの保管とアクセス制御が重要,https://learn.microsoft.com/azure/security/fundamentals/encryption-overview
