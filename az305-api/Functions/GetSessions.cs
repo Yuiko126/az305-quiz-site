@@ -12,12 +12,14 @@ public class GetSessions
     private readonly SessionRepository _sessions;
     private readonly JwtTokenService   _jwt;
     private readonly ILogger<GetSessions> _logger;
+    private readonly CorsHelper _corsHelper;
 
-    public GetSessions(SessionRepository sessions, JwtTokenService jwt, ILogger<GetSessions> logger)
+    public GetSessions(SessionRepository sessions, JwtTokenService jwt, ILogger<GetSessions> logger, CorsHelper corsHelper)
     {
         _sessions = sessions;
         _jwt      = jwt;
         _logger   = logger;
+        _corsHelper = corsHelper;
     }
 
     [Function("GetSessions")]
@@ -28,21 +30,19 @@ public class GetSessions
         try
         {
             // ✅ CORS preflight対応
-            if (req.Method == "OPTIONS")
+            if (_corsHelper.IsPreflightRequest(req))
             {
-                var corsResponse = req.CreateResponse(HttpStatusCode.OK);
-                CorsHelper.AddCorsHeaders(req, corsResponse);
-                return corsResponse;
+                return _corsHelper.CreateCorsPreflightResponse(req);
             }
 
             HttpResponseData Unauthorized()
             {
                 var r = req.CreateResponse(HttpStatusCode.Unauthorized);
-                CorsHelper.AddCorsHeaders(req, r);
+                _corsHelper.AddHeaders(req, r);
                 return r;
             }
 
-            var token = CorsHelper.ExtractCookieValue(req, "access_token");
+            var token = _corsHelper.GetCookieValue(req, "access_token");
             if (string.IsNullOrEmpty(token))
                 return Unauthorized();
 
@@ -53,7 +53,7 @@ public class GetSessions
             var sessions = await _sessions.GetSessionsAsync(userId);
 
             var res = req.CreateResponse(HttpStatusCode.OK);
-            CorsHelper.AddCorsHeaders(req, res);
+            _corsHelper.AddHeaders(req, res);
             await res.WriteAsJsonAsync(sessions);
             return res;
         }
@@ -62,7 +62,7 @@ public class GetSessions
             _logger.LogError(ex, "GetSessions failed");
 
             var err = req.CreateResponse(HttpStatusCode.InternalServerError);
-            CorsHelper.AddCorsHeaders(req, err);
+            _corsHelper.AddHeaders(req, err);
             await err.WriteAsJsonAsync(new { error = "Internal Server Error" });
             return err;
         }
