@@ -1,6 +1,4 @@
 using System.Net;
-using az305_api.Dtos.Auth;
-using Microsoft.Azure.Functions.Worker.Http;
 
 namespace az305_api.Functions;
 
@@ -12,15 +10,15 @@ public sealed class CorsHelper
     private static HashSet<string> GetAllowedOrigins()
     {
         // 環境変数から値を取得（ハイフンとアンダースコア両方チェック）
-        var originsStr = Environment.GetEnvironmentVariable("ALLOWED-ORIGINS")
+        var originsStr = Environment.GetEnvironmentVariable("ALLOWED-ORIGINS") 
                       ?? Environment.GetEnvironmentVariable("ALLOWED_ORIGINS");
 
         if (string.IsNullOrEmpty(originsStr))
         {
             // 環境変数がない場合はデフォルト値（開発環境用）
             // 両方のポート番号を許可
-            var defaults = new HashSet<string>
-            {
+            var defaults = new HashSet<string> 
+            { 
                 "http://localhost:5173",
                 "http://localhost:5174"
             };
@@ -178,11 +176,22 @@ public sealed class CorsHelper
     /// <summary>
     ///  400 Bad Requestレスポンスを返すヘルパーメソッド
     /// </summary>
-    public async Task<HttpResponseData> BadRequestResponseAsync(HttpRequestData req, string message)
+    public async Task<HttpResponseData> BadRequestResponseAsync(HttpRequestData req)
     {
         var res = req.CreateResponse(HttpStatusCode.BadRequest);
         AddHeaders(req, res);
         await res.WriteAsJsonAsync(new { error = message });
+        return res;
+    } 
+
+    /// <summary>
+    ///  Internal Server Errorレスポンスを返すヘルパーメソッド
+    /// </summary>
+    public async Task<HttpResponseData> InternalServerErrorResponseAsync(HttpRequestData req)
+    {
+        var res = req.CreateResponse(HttpStatusCode.InternalServerError);
+        AddHeaders(req, res);
+        await res.WriteAsJsonAsync(new { error = "Internal Server Error" });
         return res;
     }
 }

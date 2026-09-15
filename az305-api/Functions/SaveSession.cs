@@ -1,11 +1,5 @@
 using System.Net;
 using System.Text.Json;
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.Functions.Worker.Http;
-using Microsoft.Extensions.Logging;
-using az305_api.Models;
-using az305_api.Services.Auth;
-using az305_api.Services.Data;
 
 namespace az305_api.Functions;
 
@@ -32,16 +26,16 @@ public class SaveSession
         try
         {
             // ✅ CORS preflight対応
-            if (_corsHelper.IsPreflightRequest(req))
+            if (CorsHelper.isPreflightRequest(req))
             {
-                return _corsHelper.CreateCorsPreflightResponse(req);
+                return CorsHelper.CreatePreflightResponse(req);
             }
 
-            var token = _corsHelper.GetCookieValue(req, "access_token");
+            var token = CorsHelper.ExtractCookieValue(req, "access_token");
             if (string.IsNullOrEmpty(token))
             {
                 var unauthorized = req.CreateResponse(HttpStatusCode.Unauthorized);
-                _corsHelper.AddHeaders(req, unauthorized);
+                CorsHelper.AddCorsHeaders(req, unauthorized);
                 await unauthorized.WriteAsJsonAsync(new { error = "Unauthorized" });
                 return unauthorized;
             }
@@ -50,7 +44,7 @@ public class SaveSession
             if (userId is null)
             {
                 var unauthorized = req.CreateResponse(HttpStatusCode.Unauthorized);
-                _corsHelper.AddHeaders(req, unauthorized);
+                CorsHelper.AddCorsHeaders(req, unauthorized);
                 await unauthorized.WriteAsJsonAsync(new { error = "Unauthorized" });
                 return unauthorized;
             }
@@ -67,7 +61,7 @@ public class SaveSession
             if (dto is null)
             {
                 var badRequest = req.CreateResponse(HttpStatusCode.BadRequest);
-                _corsHelper.AddHeaders(req, badRequest);
+                CorsHelper.AddCorsHeaders(req, badRequest);
                 await badRequest.WriteStringAsync("Invalid request body");
                 return badRequest;
             }
@@ -83,7 +77,7 @@ public class SaveSession
             await _sessions.SaveSessionAsync(dto);
 
             var ok = req.CreateResponse(HttpStatusCode.Created);
-            _corsHelper.AddHeaders(req, ok);
+            CorsHelper.AddCorsHeaders(req, ok);
             await ok.WriteAsJsonAsync(new { message = "Session saved", success = true });
             return ok;
         }
@@ -92,7 +86,7 @@ public class SaveSession
             _logger.LogError(ex, "SaveSession failed");
 
             var err = req.CreateResponse(HttpStatusCode.InternalServerError);
-            _corsHelper.AddHeaders(req, err);
+            CorsHelper.AddCorsHeaders(req, err);
             await err.WriteAsJsonAsync(new { error = "Internal Server Error" });
             return err;
         }

@@ -1,9 +1,4 @@
 using System.Net;
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.Functions.Worker.Http;
-using Microsoft.Extensions.Logging;
-using az305_api.Services.Auth;
-using az305_api.Services.Data;
 
 namespace az305_api.Functions;
 
@@ -30,19 +25,19 @@ public class GetSessions
         try
         {
             // ✅ CORS preflight対応
-            if (_corsHelper.IsPreflightRequest(req))
+            if (CorsHelper.isPreflightRequest(req))
             {
-                return _corsHelper.CreateCorsPreflightResponse(req);
+                return CorsHelper.CreatePreflightResponse(req);
             }
 
             HttpResponseData Unauthorized()
             {
                 var r = req.CreateResponse(HttpStatusCode.Unauthorized);
-                _corsHelper.AddHeaders(req, r);
+                CorsHelper.AddCorsHeaders(req, r);
                 return r;
             }
 
-            var token = _corsHelper.GetCookieValue(req, "access_token");
+            var token = CorsHelper.ExtractCookieValue(req, "access_token");
             if (string.IsNullOrEmpty(token))
                 return Unauthorized();
 
@@ -53,7 +48,7 @@ public class GetSessions
             var sessions = await _sessions.GetSessionsAsync(userId);
 
             var res = req.CreateResponse(HttpStatusCode.OK);
-            _corsHelper.AddHeaders(req, res);
+            CorsHelper.AddCorsHeaders(req, res);
             await res.WriteAsJsonAsync(sessions);
             return res;
         }
@@ -62,7 +57,7 @@ public class GetSessions
             _logger.LogError(ex, "GetSessions failed");
 
             var err = req.CreateResponse(HttpStatusCode.InternalServerError);
-            _corsHelper.AddHeaders(req, err);
+            CorsHelper.AddCorsHeaders(req, err);
             await err.WriteAsJsonAsync(new { error = "Internal Server Error" });
             return err;
         }

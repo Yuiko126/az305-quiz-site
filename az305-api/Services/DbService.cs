@@ -7,17 +7,7 @@
 //   dotnet add package Microsoft.AspNetCore.Identity  (追加が必要)
 // ============================================================
 
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Data.Sqlite;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.IO;
-using System.Threading.Tasks;
-using az305_api.Models;
-using az305_api.Dtos;
-using System.Runtime.CompilerServices;
 using System.Data;
-using Azure.Core;
 
 namespace az305_api.Services;
 
