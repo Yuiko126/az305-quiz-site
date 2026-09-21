@@ -2,9 +2,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json;
 using az305_api.Dtos.Auth;
+using az305_api.Functions;
 using Microsoft.Azure.Functions.Worker.Http;
 
-namespace az305_api.Functions.Auth;
+namespace az305_api.Feature.Auth;
 
 public static class AuthRequestHelper
 {

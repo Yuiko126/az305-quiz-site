@@ -6,6 +6,9 @@ using az305_api.Services.Data;
 
 namespace az305_api.Functions.Stats;
 
+/// <summary>
+///  ユーザーのカテゴリ別実績を取得する
+/// </summary>
 public class GetUserStats
 {
     private readonly QuestionRepository _questions;
@@ -19,20 +22,25 @@ public class GetUserStats
 
     [Function("GetUserStats")]
     public async Task<HttpResponseData> Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "stats")]
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "options", Route = "stats")]
         HttpRequestData req)
     {
+        // CORSプリフライトリクエストは共通ヘルパーで応答する
+        if (CorsHelper.isPreflightRequest(req))
+            return CorsHelper.CreatePreflightResponse(req);
+
         var token = CorsHelper.ExtractCookieValue(req, "access_token");
         if (string.IsNullOrEmpty(token))
-            return req.CreateResponse(HttpStatusCode.Unauthorized);
+            return await CorsHelper.CreateUnauthorizedResponseAsync(req, "Unauthorized");
 
         var userId = _jwt.ValidateAndGetUserId(token);
         if (string.IsNullOrEmpty(userId))
-            return req.CreateResponse(HttpStatusCode.Unauthorized);
+            return await CorsHelper.CreateUnauthorizedResponseAsync(req, "Unauthorized");
 
         var stats = await _questions.GetUserCategoryStatsAsync(userId);
 
         var res = req.CreateResponse(HttpStatusCode.OK);
+        CorsHelper.AddCorsHeaders(req, res);
         await res.WriteAsJsonAsync(stats);
         return res;
     }

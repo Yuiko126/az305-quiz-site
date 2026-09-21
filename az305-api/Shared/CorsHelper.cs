@@ -11,7 +11,7 @@ public sealed class CorsHelper
     {
         // 環境変数から値を取得（ハイフンとアンダースコア両方チェック）
         var originsStr = Environment.GetEnvironmentVariable("ALLOWED-ORIGINS") 
-                      ?? Environment.GetEnvironmentVariable("ALLOWED_ORIGINS");
+                        ?? Environment.GetEnvironmentVariable("ALLOWED_ORIGINS");
 
         if (string.IsNullOrEmpty(originsStr))
         {

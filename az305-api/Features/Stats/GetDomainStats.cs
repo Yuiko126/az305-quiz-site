@@ -6,6 +6,9 @@ using az305_api.Services.Data;
 
 namespace az305_api.Functions.Stats;
 
+/// <summary>
+/// 分野別の実績を取得する
+/// </summary>
 public class GetDomainStats
 {
     private readonly QuestionRepository _questions;
@@ -22,36 +25,26 @@ public class GetDomainStats
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", "options", Route = "stats/domains")]
         HttpRequestData req)
     {
-        // CORSプリフライト対応
-        if (req.Method == "OPTIONS")
-        {
-            var preflight = req.CreateResponse(HttpStatusCode.NoContent);
-            CorsHelper.AddCorsHeaders(req, preflight);
-            return preflight;
-        }
+        // CORSプリフライトリクエストは共通ヘルパーで応答
+        if (CorsHelper.isPreflightRequest(req))
+            return CorsHelper.CreatePreflightResponse(req);
 
         var token = CorsHelper.ExtractCookieValue(req, "access_token");
+
         if (string.IsNullOrEmpty(token))
-            return await Unauthorized(req);
+            return await CorsHelper.CreateUnauthorizedResponseAsync(req, "Unauthorized");
 
         var userId = _jwt.ValidateAndGetUserId(token);
-        if (userId == null)
-            return await Unauthorized(req);
 
+        if (userId == null)
+            return await CorsHelper.CreateUnauthorizedResponseAsync(req, "Unauthorized");
+
+        // 分野別の実績を取得
         var stats = await _questions.GetDomainStatsAsync(userId);
 
         var res = req.CreateResponse(HttpStatusCode.OK);
         CorsHelper.AddCorsHeaders(req, res);
         await res.WriteAsJsonAsync(stats);
-        return res;
-    }
-
-    // ===== 共通 Unauthorized =====
-    private static async Task<HttpResponseData> Unauthorized(HttpRequestData req)
-    {
-        var res = req.CreateResponse(HttpStatusCode.Unauthorized);
-        CorsHelper.AddCorsHeaders(req, res);
-        await res.WriteAsJsonAsync(new { error = "Unauthorized" });
         return res;
     }
 }

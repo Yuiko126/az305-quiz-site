@@ -93,6 +93,32 @@ public sealed class UserRepository
         };
     }
 
+    public async Task<bool> UpdateProfileAsync(string userId, string username, string email)
+    {
+        var normalizedUsername = username.Trim();
+        var normalizedEmail = NormalizeEmail(email);
+
+        using var conn = _db.CreateConnection();
+        await conn.OpenAsync();
+
+        using var cmd = conn.CreateCommand();
+        cmd.CommandText = """
+            UPDATE users
+            SET username = $username,
+                email = $email,
+                updated_at = $updatedAt
+            WHERE id = $userId;
+        """;
+
+        cmd.Parameters.AddWithValue("$username", normalizedUsername);
+        cmd.Parameters.AddWithValue("$email", normalizedEmail);
+        cmd.Parameters.AddWithValue("$updatedAt", DateTime.UtcNow.ToString("o"));
+        cmd.Parameters.AddWithValue("$userId", userId);
+
+        var affected = await cmd.ExecuteNonQueryAsync();
+        return affected > 0;
+    }
+
     public async Task<User?> FindByEmailAsync(string email)
     {
         var normalizedEmail = NormalizeEmail(email);

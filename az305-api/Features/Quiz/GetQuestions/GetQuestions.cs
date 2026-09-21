@@ -23,19 +23,15 @@ public class GetQuestions
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", "options", Route = "questions")]
         HttpRequestData req)
     {
-        // CORSプリフライト対応
-        if (req.Method == "OPTIONS")
-        {
-            var preflight = req.CreateResponse(HttpStatusCode.NoContent);
-            CorsHelper.AddCorsHeaders(req, preflight);
-            return preflight;
-        }
+        // CORSプリフライトリクエストは共通ヘルパーで応答する
+        if (CorsHelper.isPreflightRequest(req))
+            return CorsHelper.CreatePreflightResponse(req);
 
         _logger.LogInformation("GET /api/questions");
 
         // クエリパラメータ
-        var query    = System.Web.HttpUtility.ParseQueryString(req.Url.Query);
-        var domain   = query["domain"];
+        var query = System.Web.HttpUtility.ParseQueryString(req.Url.Query);
+        var domain = query["domain"];
         var limitStr = query["limit"];
 
         var limit = int.TryParse(limitStr, out var l) && l > 0 ? l : 10;
@@ -44,8 +40,6 @@ public class GetQuestions
 
         var ok = req.CreateResponse(HttpStatusCode.OK);
         ok.Headers.Add("Content-Type", "application/json; charset=utf-8");
-
-        // CORSヘッダーを追加
         CorsHelper.AddCorsHeaders(req, ok);
 
         await ok.WriteStringAsync(

@@ -1,11 +1,12 @@
 using System.Net;
 using az305_api.Dtos.Auth;
+using az305_api.Functions;
 using az305_api.Services.Auth;
 using az305_api.Services.Data;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 
-namespace az305_api.Functions.Auth;
+namespace az305_api.Feature.Auth;
 
 public sealed class RefreshFunction
 {
@@ -23,18 +24,15 @@ public sealed class RefreshFunction
         _users  = users;
     }
 
+
     [Function("Refresh")]
     public async Task<HttpResponseData> Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "post", "options", Route = "auth/refresh")]
         HttpRequestData req)
     {
-        // CORSプリフライト対応
-        if (req.Method == "OPTIONS")
-        {
-            var preflight = req.CreateResponse(HttpStatusCode.NoContent);
-            CorsHelper.AddCorsHeaders(req, preflight);
-            return preflight;
-        }
+        // CORSプリフライトリクエストは共通ヘルパーで応答する
+        if (CorsHelper.isPreflightRequest(req))
+            return CorsHelper.CreatePreflightResponse(req);
 
         var refreshToken = CorsHelper.ExtractCookieValue(req, "refresh_token");
         if (string.IsNullOrEmpty(refreshToken))
@@ -53,7 +51,7 @@ public sealed class RefreshFunction
         var user = await _users.FindByIdAsync(userId);
         var userName = user?.Username ?? userId;
 
-        var newAccessToken  = _jwt.Generate(userId, userName);
+        var newAccessToken = _jwt.Generate(userId, userName);
         var newRefreshToken = _jwt.GenerateRefreshToken();
         var expiresAt = DateTime.UtcNow.AddDays(AppConstants.RefreshTokenDays);
 
@@ -61,9 +59,7 @@ public sealed class RefreshFunction
         await _tokens.SaveAsync(userId, newRefreshToken, expiresAt);
 
         var ok = req.CreateResponse(HttpStatusCode.OK);
-
         CorsHelper.AddAuthCookies(ok, newAccessToken, newRefreshToken);
-
         CorsHelper.AddCorsHeaders(req, ok);
 
         // キャッシュを無効化
@@ -74,5 +70,4 @@ public sealed class RefreshFunction
 
         return ok;
     }
-
 }

@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Identity;
 using az305_api.Models;
 using az305_api.Services.Data;
 using Microsoft.Data.Sqlite;
@@ -10,13 +9,18 @@ public sealed class AuthService
     private readonly UserRepository _users;
     private readonly JwtTokenService _jwt;
     private readonly RefreshTokenRepository _tokens;
-    private readonly PasswordHasher<User> _hasher = new();
+    private readonly PasswordCredentialService _passwordCredentials;
 
-    public AuthService(UserRepository users, JwtTokenService jwt, RefreshTokenRepository tokens)
+    public AuthService(
+        UserRepository users,
+        JwtTokenService jwt,
+        RefreshTokenRepository tokens,
+        PasswordCredentialService passwordCredentials)
     {
-        _users  = users;
-        _jwt    = jwt;
+        _users = users;
+        _jwt = jwt;
         _tokens = tokens;
+        _passwordCredentials = passwordCredentials;
     }
 
     /// <summary>
@@ -47,7 +51,7 @@ public sealed class AuthService
         var normalizedLoginId = loginId.Trim();
 
         var user = await _users.FindByLoginIdAsync(normalizedLoginId);
-        if (!CanLogin(user, password))
+        if (!_passwordCredentials.VerifyPassword(user, password))
             return LoginResult.Fail(AuthFailureReason.InvalidCredentials);
 
         var authenticatedUser = user!;
@@ -96,10 +100,9 @@ public sealed class AuthService
         if (await UserAlreadyExistsAsync(normalizedUsername, normalizedEmail))
             return RegisterResult.Fail(AuthFailureReason.DuplicateUser);
 
-        // 存在しなければUserインスタンスを作成し、
-        // passwordをソルト・反復回数・アルゴリズム情報付きハッシュ文字列を生成
-        var tempUser = new User();
-        var hash = _hasher.HashPassword(tempUser, password);
+        // 存在しなければ User インスタンスを作成し、
+        // パスワードを安全なハッシュへ変換する
+        var hash = _passwordCredentials.HashPassword(password);
 
         try
         {
@@ -112,15 +115,6 @@ public sealed class AuthService
             // 登録できない場合は登録失敗の事実のみ返す（画面に表示させるため）
             return RegisterResult.Fail(AuthFailureReason.PersistenceConflict);
         }
-    }
-
-    private bool CanLogin(User? user, string password)
-    {
-        if (user is null || user.IsActive == 0)
-            return false;
-
-        var result = _hasher.VerifyHashedPassword(user, user.PasswordHash, password);
-        return result != PasswordVerificationResult.Failed;
     }
 
     private async Task<(string accessToken, string refreshToken)> IssueTokensAsync(User user)
